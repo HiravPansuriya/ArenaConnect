@@ -1,0 +1,43 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}Organizer Profile{% endblock %} 
+
+{% block content %}
+<div class="max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+    <!-- Profile Section -->
+    <div class="flex items-center space-x-6 mb-8">
+        <img src="{% static 'images/user.png' %}" class="w-24 h-24 rounded-full border-4 border-indigo-500 shadow-md" alt="Profile Image" />
+        <div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ user.username }}</h2>
+            <p class="text-gray-600">{{ user.email }}</p>
+        </div>
+    </div>
+
+    <!-- Create Event Button -->
+    <div class="mb-8 flex justify-center">
+        <a href="{% url 'create_event' %}" class="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-indigo-600 hover:to-purple-500 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-semibold transition-all transform hover:scale-105"> + Create Event </a>
+    </div>
+
+    <!-- Event Listings -->
+    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Your Events</h3>
+
+    {% if events %}
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for event in events %}
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-bold text-indigo-700">{{ event.name }}</h3>
+            <p class="text-gray-600 mt-2 flex items-center">📅 <span class="ml-2 font-medium">Date: {{ event.date }}</span></p>
+            <p class="text-gray-500 mt-2">{{ event.description }}</p>
+            <div class="mt-4 flex justify-between items-center">
+                <div class="mt-4 flex justify-between items-center">
+                    <a href="{% url 'view_event_details' event.id %}" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"> View Details </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500 text-center mt-6">No events created yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

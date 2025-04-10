@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block title %}Register for Event{% endblock %} {% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow-md">
+    <h2 class="text-xl font-bold mb-4">Register for {{ event.name }}</h2>
+
+    {% if message %} {% if 'already' in message %}
+    <div class="mb-4 p-4 rounded bg-red-500 text-white">{{ message }}</div>
+    {% else %}
+    <div class="mb-4 p-4 rounded bg-green-500 text-white">{{ message }}</div>
+    {% endif %} {% endif %}
+</div>
+{% endblock %}

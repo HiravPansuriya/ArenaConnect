@@ -1,0 +1,117 @@
+{% extends 'base.html' %} {% block title %}Home - ArenaConnect{% endblock %} {% block content %} {% load static %}
+<!-- Hero Section -->
+<div class="text-center py-24 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-lg">
+    <h1 class="text-5xl font-extrabold text-blue-700">Welcome to ArenaConnect</h1>
+    <p class="text-lg mt-4 text-gray-600">Sync your game profiles, track your stats, and compete globally.</p>
+
+    <a href="{% url 'events_list' %}" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition"> Browse Events </a>
+</div>
+
+<!-- Features Section -->
+<section class="container mx-auto px-6 mt-16">
+    <h2 class="text-3xl font-bold text-center text-gray-800">Why Choose ArenaConnect?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:scale-105 transition-transform duration-300">
+            <img src="https://via.placeholder.com/100" class="mx-auto mb-4" />
+            <h3 class="text-xl font-semibold text-blue-600">All Your Game Stats in One Place</h3>
+            <p class="text-gray-600 mt-2">Sync your game accounts and track your progress effortlessly.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:scale-105 transition-transform duration-300">
+            <img src="https://via.placeholder.com/100" class="mx-auto mb-4" />
+            <h3 class="text-xl font-semibold text-blue-600">Compete in Global Tournaments</h3>
+            <p class="text-gray-600 mt-2">Participate in tournaments and win exciting prizes.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:scale-105 transition-transform duration-300">
+            <div class="relative flex justify-center mt-2">
+                <div class="relative w-14 h-14">
+                    <img src="{% static 'images/BGMI.jpeg' %}" alt="BGMI" class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-white shadow-md" />
+                </div>
+                <div class="relative w-14 h-14 -ml-4">
+                    <img src="{% static 'images/COD.jpeg' %}" alt="COD" class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-white shadow-md" />
+                </div>
+                <div class="relative w-14 h-14 -ml-4">
+                    <img src="{% static 'images/COC.jpeg' %}" alt="COC" class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-white shadow-md" />
+                </div>
+                <div class="relative w-14 h-14 -ml-4">
+                    <img src="{% static 'images/FIFA.jpeg' %}" alt="FIFA" class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-white shadow-md" />
+                </div>
+                <div class="relative w-14 h-14 -ml-4">
+                    <img src="{% static 'images/CHESS.jpeg' %}" alt="Chess" class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-white shadow-md" />
+                </div>
+            </div>
+            <h3 class="text-xl font-semibold text-blue-600 mt-8">Sync Across Multiple Games</h3>
+            <p class="text-gray-600 mt-2">Easily connect to your favorite games like BGMI, COD, COC, and more.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Game Sync Section -->
+<section class="container mx-auto px-6 mt-16">
+    <h2 class="text-3xl font-bold text-center text-gray-800">Supported Games</h2>
+    <div class="flex flex-wrap justify-center gap-6 mt-8">
+        <div class="bg-blue-100 px-8 py-6 rounded-lg shadow text-center w-48 hover:bg-blue-300 transition duration-300">
+            <img src="{% static 'images/BGMI.jpeg' %}" alt="BGMI" class="mx-auto mb-4 h-16 rounded-full border-2 border-blue-600 hover:scale-110 transition-transform duration-300" />
+            <p class="text-lg font-semibold text-blue-600">BGMI</p>
+        </div>
+        <div class="bg-blue-100 px-8 py-6 rounded-lg shadow text-center w-48 hover:bg-blue-300 transition duration-300">
+            <img src="{% static 'images/COD.jpeg' %}" alt="COD" class="mx-auto mb-4 h-16 rounded-full border-2 border-blue-600 hover:scale-110 transition-transform duration-300" />
+            <p class="text-lg font-semibold text-blue-600">COD</p>
+        </div>
+        <div class="bg-blue-100 px-8 py-6 rounded-lg shadow text-center w-48 hover:bg-blue-300 transition duration-300">
+            <img src="{% static 'images/COC.jpeg' %}" alt="COC" class="mx-auto mb-4 h-16 rounded-full border-2 border-blue-600 hover:scale-110 transition-transform duration-300" />
+            <p class="text-lg font-semibold text-blue-600">COC</p>
+        </div>
+        <div class="bg-blue-100 px-8 py-6 rounded-lg shadow text-center w-48 hover:bg-blue-300 transition duration-300">
+            <img src="{% static 'images/FIFA.jpeg' %}" alt="FIFA" class="mx-auto mb-4 h-16 rounded-full border-2 border-blue-600 hover:scale-110 transition-transform duration-300" />
+            <p class="text-lg font-semibold text-blue-600">FIFA</p>
+        </div>
+        <div class="bg-blue-100 px-8 py-6 rounded-lg shadow text-center w-48 hover:bg-blue-300 transition duration-300">
+            <img src="{% static 'images/CHESS.jpeg' %}" alt="Chess.com" class="mx-auto mb-4 h-16 rounded-full border-2 border-blue-600 hover:scale-110 transition-transform duration-300" />
+            <p class="text-lg font-semibold text-blue-600">Chess.com</p>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Showcase -->
+<section class="container mx-auto px-6 mt-16">
+    <h2 class="text-3xl font-bold text-center text-gray-800">Your Gaming Stats</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:bg-gray-200 transition duration-300">
+            <h3 class="text-2xl font-semibold text-blue-600">Clash of Clans Trophies</h3>
+            <p class="text-gray-600 mt-2 text-xl">3200</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:bg-gray-200 transition duration-300">
+            <h3 class="text-2xl font-semibold text-blue-600">Call of Duty K/D Ratio</h3>
+            <p class="text-gray-600 mt-2 text-xl">3.5</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:bg-gray-200 transition duration-300">
+            <h3 class="text-2xl font-semibold text-blue-600">Chess.com Rating</h3>
+            <p class="text-gray-600 mt-2 text-xl">1500</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center hover:bg-gray-200 transition duration-300">
+            <h3 class="text-2xl font-semibold text-blue-600">PUBG Wins</h3>
+            <p class="text-gray-600 mt-2 text-xl">200</p>
+        </div>
+    </div>
+</section>
+
+<!-- Join Community -->
+<section class="container mx-auto px-6 mt-16 mb-16 text-center bg-blue-600 text-white py-12 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold">Join Our Community</h2>
+    <p class="text-lg mt-4">Connect with pro players, get tips, and participate in tournaments.</p>
+    <a href="{% url 'signup' %}" class="mt-6 inline-block bg-white text-blue-600 px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-gray-200 transition"> Get Started </a>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white text-center py-6 w-full">
+    <div class="container mx-auto">
+        <p class="text-lg">© 2025 ArenaConnect. All rights reserved.</p>
+        <div class="mt-4 space-x-6">
+            <a href="#" class="hover:text-blue-400 transition">Privacy Policy</a>
+            <a href="#" class="hover:text-blue-400 transition">Terms of Service</a>
+            <a href="#" class="hover:text-blue-400 transition">Contact Us</a>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

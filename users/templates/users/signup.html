@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% block title %}Sign Up - ArenaConnect{% endblock %} {% block content %}
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white p-8 rounded-lg shadow-lg z-50">
+    <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">Create an Account</h2>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <!-- Display form errors -->
+        {% if form.errors %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline">Please correct the errors below.</span>
+        </div>
+        {% endif %}
+
+        <!-- First Row: Username & Email -->
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Username</label>
+                <input type="text" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg" placeholder="Enter username" />
+                {% if form.username.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Email</label>
+                <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg" placeholder="Enter email" />
+                {% if form.email.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Second Row: Password & Confirm Password -->
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Password</label>
+                <input type="password" name="password1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg" placeholder="Enter password" />
+                {% if form.password1.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.password1.errors.0 }}</p>
+                {% endif %}
+            </div>
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Confirm Password</label>
+                <input type="password" name="password2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg" placeholder="Confirm password" />
+                {% if form.password2.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.password2.errors.0 }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="flex items-center space-x-2">
+            <input type="checkbox" name="is_organizer" class="w-5 h-5 text-blue-600 border-gray-300 rounded" />
+            <label class="text-gray-700 text-lg">Are you an Organizer?</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition duration-300">Sign Up</button>
+    </form>
+
+    <!-- Login Redirect -->
+    <p class="text-center text-gray-600 mt-4">
+        Already have an account?
+        <a href="{% url 'login' %}" class="text-blue-600 font-semibold hover:underline">Login</a>
+    </p>
+</div>
+{% endblock %}

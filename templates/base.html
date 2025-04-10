@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}ArenaConnect{% endblock %}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-50 text-gray-900">
+        <!-- Navbar -->
+        <nav class="bg-white shadow-md py-4">
+            <div class="container mx-auto flex justify-between items-center px-6">
+                <a href="/" class="text-2xl font-extrabold text-blue-600">ArenaConnect</a>
+
+                <div class="flex items-center space-x-6">
+                    <div class="space-x-4">
+                        {% if user.is_authenticated %} {% if user.is_organizer %}
+                        <a href="{% url 'organizer_profile' %}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Organizer Profile</a>
+                        <a href="{% url 'delete_account' %}" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">Delete Account</a>
+                        {% else %}
+                        <a href="{% url 'profile' %}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Profile</a>
+                        <a href="{% url 'events_list' %}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Browse Events</a>
+                        <a href="{% url 'delete_account' %}" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">Delete Account</a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Logout</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Login</a>
+                        <a href="{% url 'signup' %}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Signup</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Block -->
+        <div class="container mx-auto px-6 mt-8">{% block content %} {% endblock %}</div>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% block title %}Create Event - ArenaConnect{% endblock %} {% block content %}
+<div class="h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+        <!-- Header -->
+        <h2 class="text-3xl font-extrabold text-center text-blue-600 mb-6">Create Event</h2>
+
+        <!-- Display form errors -->
+        {% if form.errors %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline">Please correct the errors below.</span>
+        </div>
+        {% endif %}
+
+        <!-- Form -->
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            <!-- Event Name -->
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Event Name</label>
+                <input type="text" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg" placeholder="Enter event name" />
+                {% if form.name.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Event Date -->
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Event Date</label>
+                <input type="date" name="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg" />
+                {% if form.date.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.date.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Event Description -->
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Event Description</label>
+                <textarea name="description" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg" placeholder="Enter event description"></textarea>
+                {% if form.description.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition duration-300">Create Event</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

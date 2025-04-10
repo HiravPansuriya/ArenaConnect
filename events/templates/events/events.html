@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block title %}Events{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow-md">
+    <h2 class="text-2xl font-bold mb-4">Upcoming Events</h2>
+
+    <!-- Search Form -->
+    <form method="get" class="mb-6 p-4 bg-gray-100 rounded shadow-md">
+        <div class="flex flex-col md:flex-row gap-4">
+            <!-- Search By Game Name -->
+            <div class="flex-1">
+                <label for="game_name" class="block text-gray-700 font-medium mb-2">Search By Game Name</label>
+                <select name="game_name" id="game_name" class="w-full border-gray-300 rounded focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select a game</option>
+                    <option value="COC">COC</option>
+                    <option value="COD">COD</option>
+                    <option value="BrawlStar">Brawl Start</option>
+                    <option value="Chess">Chess.com</option>
+                    <option value="BGMI">BGMI</option>
+                </select>
+            </div>
+
+            <!-- Search By Date -->
+            <div class="flex-1">
+                <label for="date" class="block text-gray-700 font-medium mb-2">Search By Date</label>
+                <input type="date" name="date" id="date" class="w-full border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
+            </div>
+        </div>
+
+        <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Search</button>
+    </form>
+
+    {% if request.GET.game_name or request.GET.date %}
+    <p class="text-gray-600 mb-4">Showing results for: {% if request.GET.game_name %}<strong>Game: {{ request.GET.game_name }}</strong>{% endif %} {% if request.GET.date %}<strong>Date: {{ request.GET.date }}</strong>{% endif %}</p>
+    {% endif %} {% for event in events %}
+    <div class="py-4 border-b">
+        <h3 class="text-lg font-semibold">{{ event.name }}</h3>
+        <p class="text-gray-600">Date: {{ event.date }}</p>
+        <a href="{% url 'register_event' event.id %}" class="mt-2 inline-block bg-blue-500 text-white px-4 py-2 rounded"> Register </a>
+    </div>
+    {% empty %}
+    <p class="text-gray-600">No events found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

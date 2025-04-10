@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block title %}Event Details{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+    <h2 class="text-3xl font-bold text-gray-900">{{ event.name }}</h2>
+    <p class="text-gray-600 mt-2">📅 Date: {{ event.date }}</p>
+    <p class="text-gray-600 mt-2">{{ event.description }}</p>
+
+    <h3 class="mt-6 text-xl font-semibold">Registered Users</h3>
+    {% if registered_users %}
+    <ul class="mt-4 space-y-2">
+        {% for user in registered_users %}
+        <li class="p-2 bg-gray-100 rounded-lg shadow-sm">👤 {{ user.username }} ({{ user.email }})</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-gray-500 mt-4">No users have registered for this event yet.</p>
+    {% endif %}
+
+    <!-- Back Button -->
+    <div class="mt-6">
+        <a href="{% url 'organizer_profile' %}" class="text-blue-600 hover:text-blue-800 font-medium"> ← Back to Profile </a>
+    </div>
+</div>
+{% endblock %}

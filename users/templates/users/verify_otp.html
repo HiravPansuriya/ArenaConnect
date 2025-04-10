@@ -1,0 +1,154 @@
+{% extends 'base.html' %} {% block title %}Verify OTP - ArenaConnect{% endblock %} {% block content %}
+
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white p-8 rounded-lg shadow-lg z-50">
+    <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">Verify OTP</h2>
+
+    <form method="post" class="space-y-4" id="otpForm">
+        {% csrf_token %}
+
+        <!-- Display Only the Latest Message -->
+        {% if messages %} {% for message in messages|slice:"-1:" %} {% if message.tags == "success" %}
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline">{{ message }}</span>
+        </div>
+        {% elif message.tags == "error" %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline">{{ message }}</span>
+        </div>
+        {% elif message.tags == "warning" %}
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Warning!</strong>
+            <span class="block sm:inline">{{ message }}</span>
+        </div>
+        {% elif message.tags == "info" %}
+        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Info!</strong>
+            <span class="block sm:inline">{{ message }}</span>
+        </div>
+        {% endif %} {% endfor %} {% endif %}
+
+        <!-- OTP Input Field -->
+        <div>
+            <label class="block text-lg font-semibold text-gray-700 text-center">Enter OTP : </label>
+            <div class="flex justify-center space-x-2">
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            </div>
+            <input type="hidden" name="otp" id="otpHiddenInput" />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitOtpButton" class="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition duration-300">Verify OTP</button>
+    </form>
+
+    <!-- OTP Expiry Countdown -->
+    <p class="text-center text-gray-600 mt-4" id="otpExpiryText">OTP will expire in <span id="otpExpiryTimer">180</span> seconds.</p>
+
+    <!-- Resend OTP with Countdown Timer -->
+    <p class="text-center text-gray-600 mt-4">Didn't receive an OTP?</p>
+    <button id="resendOtpButton" class="w-full bg-gray-400 text-white py-3 rounded-lg text-lg font-semibold shadow-md cursor-not-allowed mt-2" disabled>Resend OTP (<span id="resendTimer">30</span>s)</button>
+
+    <!-- Hidden Link to Resend OTP -->
+    <a id="resendOtpLink" href="{% url 'resend_otp' %}" class="hidden">
+        <button class="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition duration-300 mt-2">Resend OTP</button>
+    </a>
+</div>
+
+<script>
+    let resendCountdown = 30;
+    let otpExpiryCountdown = 180;
+    const resendTimerElement = document.getElementById("resendTimer");
+    const otpExpiryTimerElement = document.getElementById("otpExpiryTimer");
+    const otpExpiryTextElement = document.getElementById("otpExpiryText");
+    const resendButton = document.getElementById("resendOtpButton");
+    const resendLink = document.getElementById("resendOtpLink");
+    const otpForm = document.getElementById("otpForm");
+    const otpInput = document.getElementById("otpInput");
+    const submitOtpButton = document.getElementById("submitOtpButton");
+
+    // Update resend OTP timer
+    function updateResendTimer() {
+        if (resendCountdown > 0) {
+            resendCountdown--;
+            resendTimerElement.textContent = resendCountdown;
+            setTimeout(updateResendTimer, 1000);
+        } else {
+            // Enable the Resend OTP button after countdown ends
+            resendButton.classList.add("hidden"); // Hide the disabled button
+            resendLink.classList.remove("hidden"); // Show the actual resend button
+        }
+    }
+
+    // Update OTP expiry timer
+    function updateOtpExpiryTimer() {
+        if (otpExpiryCountdown > 0) {
+            otpExpiryCountdown--;
+            otpExpiryTimerElement.textContent = otpExpiryCountdown;
+            setTimeout(updateOtpExpiryTimer, 1000);
+        } else {
+            otpExpiryTextElement.textContent = "OTP expired";
+            otpInput.disabled = true;
+            submitOtpButton.disabled = true;
+            submitOtpButton.classList.add("bg-gray-400", "cursor-not-allowed");
+            submitOtpButton.classList.remove("bg-blue-600", "hover:bg-blue-700");
+
+            // Enable the "Resend OTP" button immediately
+            resendButton.classList.remove("cursor-not-allowed", "bg-gray-400");
+            resendButton.classList.add("bg-blue-600", "hover:bg-blue-700");
+            resendButton.disabled = false;
+            resendButton.innerHTML = "Resend OTP";
+
+            // Stop the resend timer immediately
+            clearTimeout(resendCountdownTimer);
+        }
+    }
+
+    // Start countdowns on page load
+    updateResendTimer();
+    updateOtpExpiryTimer();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const otpBoxes = document.querySelectorAll(".otp-box");
+        const otpHiddenInput = document.getElementById("otpHiddenInput");
+        const otpForm = document.getElementById("otpForm");
+        const submitOtpButton = document.getElementById("submitOtpButton");
+
+        // Focus on the first OTP box initially
+        otpBoxes[0].focus();
+
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener("input", (e) => {
+                const value = e.target.value;
+                if (value.length === 1 && index < otpBoxes.length - 1) {
+                    otpBoxes[index + 1].focus();
+                }
+                updateHiddenInput();
+            });
+
+            box.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace") {
+                    if (box.value === "" && index > 0) {
+                        otpBoxes[index - 1].focus();
+                    }
+                }
+            });
+        });
+
+        function updateHiddenInput() {
+            otpHiddenInput.value = Array.from(otpBoxes)
+                .map((box) => box.value)
+                .join("");
+            if (otpHiddenInput.value.length === 6) {
+                otpForm.submit();
+            }
+        }
+    });
+</script>
+
+{% endblock %}
